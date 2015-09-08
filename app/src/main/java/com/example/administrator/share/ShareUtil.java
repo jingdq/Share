@@ -9,7 +9,6 @@ import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners;
-import com.umeng.socialize.media.BaseShareContent;
 import com.umeng.socialize.media.SinaShareContent;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
@@ -32,7 +31,7 @@ public class ShareUtil {
         if (instance == null){
             synchronized (ShareUtil.class){
                 if (instance == null){
-                    mContext = context.getApplicationContext();
+                    mContext = context;//.getApplicationContext();
                     instance = new ShareUtil();
                 }
             }
@@ -51,33 +50,6 @@ public class ShareUtil {
         wxCircleHandler.addToSocialSDK();
         // 首先在您的Activity中添加如下成员变量
         mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-
-        // 设置分享内容
-//        mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
-//// 设置分享图片, 参数2为图片的url地址
-//        mController.setShareMedia(new UMImage(this,
-//                "http://www.umeng.com/images/pic/banner_module_social.png"));
-// 设置分享图片，参数2为本地图片的资源引用
-//mController.setShareMedia(new UMImage(getActivity(), R.drawable.icon));
-// 设置分享图片，参数2为本地图片的路径(绝对路径)
-//mController.setShareMedia(new UMImage(getActivity(),
-//                                BitmapFactory.decodeFile("/mnt/sdcard/icon.png")));
-
-// 设置分享音乐
-//UMusic uMusic = new UMusic("http://sns.whalecloud.com/test_music.mp3");
-//uMusic.setAuthor("GuGu");
-//uMusic.setTitle("天籁之音");
-// 设置音乐缩略图
-//uMusic.setThumb("http://www.umeng.com/images/pic/banner_module_social.png");
-//mController.setShareMedia(uMusic);
-
-// 设置分享视频
-//UMVideo umVideo = new UMVideo(
-//          "http://v.youku.com/v_show/id_XNTE5ODAwMDM2.html?f=19001023");
-// 设置视频缩略图
-//umVideo.setThumb("http://www.umeng.com/images/pic/banner_module_social.png");
-//umVideo.setTitle("友盟社会化分享!");
-//mController.setShareMedia(umVideo);
 
         mSnsPostListener  = new SocializeListeners.SnsPostListener() {
 
@@ -100,7 +72,7 @@ public class ShareUtil {
                 }
             }
         };
-//        mController.registerListener(mSnsPostListener);
+        mController.registerListener(mSnsPostListener);
     }
 
     /**
@@ -116,20 +88,19 @@ public class ShareUtil {
 
          //设置微信好友分享内容
          WeiXinShareContent weixinContent = new WeiXinShareContent();
-//设置分享文字
+      //设置分享文字
          if (!TextUtils.isEmpty(content))
          weixinContent.setShareContent(content);
-//设置title
+      //设置title
          if (!TextUtils.isEmpty(title))
          weixinContent.setTitle(title);
-//设置分享内容跳转URL
+     //设置分享内容跳转URL
          if (!TextUtils.isEmpty(contentUrl))
          weixinContent.setTargetUrl(contentUrl);
-//设置分享图片
-         if (!TextUtils.isEmpty(imgurl))
-        weixinContent.setShareImage(new UMImage(mContext,imgurl));
+     //设置分享图片
+         weixinContent.setShareImage(new UMImage(mContext, R.mipmap.ic_launcher));
          mController.setShareMedia(weixinContent);
-         mController.postShare(mContext, SHARE_MEDIA.WEIXIN, mSnsPostListener);
+         mController.postShare(mContext, SHARE_MEDIA.WEIXIN, null);
 
      }else if(SHARE_MEDIA.WEIXIN_CIRCLE == shareType){
 
@@ -141,10 +112,11 @@ public class ShareUtil {
                circleMedia.setShareImage(new UMImage(mContext,R.mipmap.ic_launcher));
          circleMedia.setTargetUrl("http://www.baidu.com");
          mController.setShareMedia(circleMedia);
-         mController.postShare(mContext, SHARE_MEDIA.WEIXIN, mSnsPostListener);
+         mController.postShare(mContext, SHARE_MEDIA.WEIXIN, null);
 
 
      }else if(SHARE_MEDIA.SINA == shareType){
+
          SinaShareContent sinaShareContent = new SinaShareContent();
          if (!TextUtils.isEmpty(imgurl))
          sinaShareContent.setShareImage(new UMImage(mContext, imgurl));

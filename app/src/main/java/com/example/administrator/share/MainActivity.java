@@ -1,8 +1,10 @@
 package com.example.administrator.share;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,15 +13,6 @@ import android.widget.Toast;
 
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.SocializeEntity;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners;
-import com.umeng.socialize.media.SinaShareContent;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
-import com.umeng.socialize.weixin.media.CircleShareContent;
-import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 public class MainActivity extends AppCompatActivity {
 //    UMSocialService mController;
@@ -29,68 +22,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
                super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-//// Ìí¼ÓÎ¢ĞÅÆ½Ì¨
-//        UMWXHandler wxHandler = new UMWXHandler(this,appID,appSecret);
-//        wxHandler.addToSocialSDK();
-//// Ìí¼ÓÎ¢ĞÅÅóÓÑÈ¦
-//        UMWXHandler wxCircleHandler = new UMWXHandler(this,appID,appSecret);
-//        wxCircleHandler.setToCircle(true);
-//        wxCircleHandler.addToSocialSDK();
-//        // Ê×ÏÈÔÚÄúµÄActivityÖĞÌí¼ÓÈçÏÂ³ÉÔ±±äÁ¿
-//        mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-// ÉèÖÃ·ÖÏíÄÚÈİ
-//        mController.setShareContent("ÓÑÃËÉç»á»¯×é¼ş£¨SDK£©ÈÃÒÆ¶¯Ó¦ÓÃ¿ìËÙÕûºÏÉç½»·ÖÏí¹¦ÄÜ£¬http://www.umeng.com/social");
-//// ÉèÖÃ·ÖÏíÍ¼Æ¬, ²ÎÊı2ÎªÍ¼Æ¬µÄurlµØÖ·
-//        mController.setShareMedia(new UMImage(this,
-//                "http://www.umeng.com/images/pic/banner_module_social.png"));
-// ÉèÖÃ·ÖÏíÍ¼Æ¬£¬²ÎÊı2Îª±¾µØÍ¼Æ¬µÄ×ÊÔ´ÒıÓÃ
-//mController.setShareMedia(new UMImage(getActivity(), R.drawable.icon));
-// ÉèÖÃ·ÖÏíÍ¼Æ¬£¬²ÎÊı2Îª±¾µØÍ¼Æ¬µÄÂ·¾¶(¾ø¶ÔÂ·¾¶)
-//mController.setShareMedia(new UMImage(getActivity(),
-//                                BitmapFactory.decodeFile("/mnt/sdcard/icon.png")));
-
-// ÉèÖÃ·ÖÏíÒôÀÖ
-//UMusic uMusic = new UMusic("http://sns.whalecloud.com/test_music.mp3");
-//uMusic.setAuthor("GuGu");
-//uMusic.setTitle("Ììô¥Ö®Òô");
-// ÉèÖÃÒôÀÖËõÂÔÍ¼
-//uMusic.setThumb("http://www.umeng.com/images/pic/banner_module_social.png");
-//mController.setShareMedia(uMusic);
-
-// ÉèÖÃ·ÖÏíÊÓÆµ
-//UMVideo umVideo = new UMVideo(
-//          "http://v.youku.com/v_show/id_XNTE5ODAwMDM2.html?f=19001023");
-// ÉèÖÃÊÓÆµËõÂÔÍ¼
-//umVideo.setThumb("http://www.umeng.com/images/pic/banner_module_social.png");
-//umVideo.setTitle("ÓÑÃËÉç»á»¯·ÖÏí!");
-//mController.setShareMedia(umVideo);
-
-//        SocializeListeners.SnsPostListener mSnsPostListener  = new SocializeListeners.SnsPostListener() {
-//
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onComplete(SHARE_MEDIA platform, int stCode,
-//                                   SocializeEntity entity) {
-//                if (stCode == 200) {
-//                    Toast.makeText(MainActivity.this, "·ÖÏí³É¹¦", Toast.LENGTH_SHORT)
-//                            .show();
-//                } else {
-//                    Toast.makeText(MainActivity.this,
-//                            "·ÖÏíÊ§°Ü : error code : " + stCode, Toast.LENGTH_SHORT)
-//                            .show();
-//                }
-//            }
-//        };
-//        mController.registerListener(mSnsPostListener);
-
-
-
 
     }
 
@@ -129,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
       boolean  sIsWXAppInstalledAndSupported = api.isWXAppInstalled()
                 && api.isWXAppSupportAPI();
         if (!sIsWXAppInstalledAndSupported) {
-            Log.w("aaa", "~~~~~~~~~~~~~~Î¢ĞÅ¿Í»§¶ËÎ´°²×°£¬ÇëÈ·ÈÏ");
-//            GameToast.showToast(context, "Î¢ĞÅ¿Í»§¶ËÎ´°²×°£¬ÇëÈ·ÈÏ");
+            Log.w("aaa", "~~~~~~~~~~~~~~Î¢æœªå®‰è£…å¾®ä¿¡");
+            Toast.makeText(context,"æ²’æœ‰å®‰è£å¾®ä¿¡",Toast.LENGTH_SHORT).show();
         }
 
         return sIsWXAppInstalledAndSupported;
@@ -138,89 +69,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void sinaShare(View view){
 
-         ShareUtil.getInstance(this).shareContent(SHARE_MEDIA.SINA,"ÎÒµÄ´ú´aÖ®Â·","›]ÓĞ»Øî^Â·",null,null);
+         ShareUtil.getInstance(this).shareContent(SHARE_MEDIA.SINA,"æµ‹è¯•æ ‡é¢˜ ","åˆ†äº«å†…å®¹",null,null);
 
     }
 
 
     public void unauth(View view){
 
-//        mController.deleteOauth(this, SHARE_MEDIA.SINA,
-//                new SocializeListeners.SocializeClientListener() {
-//                    @Override
-//                    public void onStart() {
-//                    }
-//
-//                    @Override
-//                    public void onComplete(int status, SocializeEntity entity) {
-//                        if (status == 200) {
-//                            Toast.makeText(MainActivity.this, "É¾³ı³É¹¦.",
-//                                    Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(MainActivity.this, "É¾³ıÊ§°Ü",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
+      ShareUtil.getInstance(this).deleteSinaAccessToken();
 
     }
 
     public void weixincircle(View view){
+        ShareUtil.getInstance(this).shareContent(SHARE_MEDIA.WEIXIN_CIRCLE, "æ ‡é¢˜æ ‡é¢˜æ ‡é¢˜æ ‡é¢˜", "åˆ†äº«å†…å®¹åˆ†äº«å†…å®¹åˆ†äº«å†…å®¹åˆ†äº«å†…å®¹", "http://www.baidu.com", "http://www.baidu.com");
 
-        ShareUtil.getInstance(this).shareContent(SHARE_MEDIA.WEIXIN_CIRCLE,"title","content","http://www.baidu.com","http://www.baidu.com");
-        //ÉèÖÃÎ¢ĞÅÅóÓÑÈ¦·ÖÏíÄÚÈİ
-//        CircleShareContent circleMedia = new CircleShareContent();
-//        circleMedia.setShareContent("À´×ÔÓÑÃËÉç»á»¯×é¼ş£¨SDK£©ÈÃÒÆ¶¯Ó¦ÓÃ¿ìËÙÕûºÏÉç½»·ÖÏí¹¦ÄÜ£¬ÅóÓÑÈ¦");
-////ÉèÖÃÅóÓÑÈ¦title
-//        circleMedia.setTitle("ÓÑÃËÉç»á»¯·ÖÏí×é¼ş-ÅóÓÑÈ¦");
-////        circleMedia.setShareImage(localImage);
-//        circleMedia.setTargetUrl("http://www.baidu.com");
-//         mController.setShareMedia(circleMedia);
-//        mController.postShare(this, SHARE_MEDIA.WEIXIN, new SocializeListeners.SnsPostListener() {
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onComplete(SHARE_MEDIA share_media, int i, SocializeEntity socializeEntity) {
-//                if (i == 200){
-//                    Toast.makeText(MainActivity.this, "share success.", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
     }
 
     public void weixinfriend(View view){
-        ShareUtil.getInstance(this).shareContent(SHARE_MEDIA.WEIXIN_CIRCLE,"title","content",null,null);
-        //ÉèÖÃÎ¢ĞÅºÃÓÑ·ÖÏíÄÚÈİ
-//        WeiXinShareContent weixinContent = new WeiXinShareContent();
-////ÉèÖÃ·ÖÏíÎÄ×Ö
-//        weixinContent.setShareContent("À´×ÔÓÑÃËÉç»á»¯×é¼ş£¨SDK£©ÈÃÒÆ¶¯Ó¦ÓÃ¿ìËÙÕûºÏÉç½»·ÖÏí¹¦ÄÜ£¬Î¢ĞÅ");
-////ÉèÖÃtitle
-//        weixinContent.setTitle("ÓÑÃËÉç»á»¯·ÖÏí×é¼ş-Î¢ĞÅ");
-////ÉèÖÃ·ÖÏíÄÚÈİÌø×ªURL
-//        weixinContent.setTargetUrl("http://www.baidu.com");
-////ÉèÖÃ·ÖÏíÍ¼Æ¬
-////        weixinContent.setShareImage(localImage);
-//        mController.setShareMedia(weixinContent);
-//        mController.postShare(this, SHARE_MEDIA.WEIXIN, new SocializeListeners.SnsPostListener() {
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onComplete(SHARE_MEDIA share_media, int i, SocializeEntity socializeEntity) {
-//                if (i == 200) {
-//                    Toast.makeText(MainActivity.this, "share success.", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
-
-
+        ShareUtil.getInstance(this).shareContent(SHARE_MEDIA.WEIXIN,"æ ‡é¢˜æ ‡é¢˜æ ‡é¢˜æ ‡é¢˜","åˆ†äº«å†…å®¹åˆ†äº«å†…å®¹åˆ†äº«å†…å®¹åˆ†äº«å†…å®¹","http://www.baidu.com",null);
     }
 
+
+    public void rate(View view){
+        Uri uri = Uri.parse("market://details?id="+getPackageName());
+        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }
